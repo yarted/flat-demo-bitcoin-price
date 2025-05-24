@@ -1,0 +1,25 @@
+name: Fetch BTC Price
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+jobs:
+  update-price:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Fetch BTC price from CoinGecko
+        run: |
+          curl -s "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd" > btc-price.json
+
+      - name: Commit updated price
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add btc-price.json
+          git commit -m "Update BTC price"
+          git push
