@@ -1,0 +1,15 @@
+name: Flat
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+jobs:
+  fetch-btc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: githubocto/flat@v3
+        with:
+          http_url: https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd
+          downloaded_filename: btc-price.json
