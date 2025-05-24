@@ -14,7 +14,8 @@ jobs:
 
       - name: Fetch BTC price from CoinGecko
         run: |
-          curl -s "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd" > btc-price.json
+          curl -s "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,litecoin,bitcoin-cash&vs_currencies=usd" > prices.json
+          
 
       - name: Commit updated price
         run: |
