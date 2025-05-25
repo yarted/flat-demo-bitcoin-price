@@ -13,15 +13,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Fetch prices and save
+      - name: Fetch prices and write dummy update
         run: |
           curl -s "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,litecoin,bitcoin-cash&vs_currencies=usd" > prices.json
-          echo "Last updated at $(date)" > update.log
+          echo "Last update: $(date)" > update.log
+          echo $RANDOM >> update.log  # ✅ guarantees a change every time
 
-      - name: Commit updated prices
+      - name: Commit and push
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add prices.json update.log
-          git commit -m "Update prices with timestamp" || echo "No changes to commit"
+          git commit -m "Force update with timestamp" || echo "Nothing to commit"
           git push
