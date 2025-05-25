@@ -8,19 +8,20 @@ on:
 jobs:
   update-price:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Fetch prices and move to root
+      - name: Fetch prices and save
         run: |
           curl -s "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,litecoin,bitcoin-cash&vs_currencies=usd" > prices.json
-          mv prices.json $GITHUB_WORKSPACE/prices.json
+          echo "Last updated at $(date)" > update.log
 
       - name: Commit updated prices
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add prices.json
-          git commit -m "Update multi-coin prices"
+          git add prices.json update.log
+          git commit -m "Update prices with timestamp" || echo "No changes to commit"
           git push
