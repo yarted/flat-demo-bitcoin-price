@@ -12,14 +12,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Fetch BTC price from CoinGecko
+      - name: Fetch prices and move to root
         run: |
-          curl -s "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,litecoin,bitcoin-cash&vs_currencies=usd" > prices.json          
+          curl -s "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,litecoin,bitcoin-cash&vs_currencies=usd" > prices.json
+          mv prices.json $GITHUB_WORKSPACE/prices.json
 
-      - name: Commit updated price
+      - name: Commit updated prices
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add prices.json
-          git commit -m "Update BTC price"
+          git commit -m "Update multi-coin prices"
           git push
