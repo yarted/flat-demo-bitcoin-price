@@ -14,13 +14,12 @@ jobs:
 
       - name: Fetch BTC price from CoinGecko
         run: |
-          curl -s "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,litecoin,bitcoin-cash&vs_currencies=usd" > prices.json
-          
+          curl -s "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,litecoin,bitcoin-cash&vs_currencies=usd" > prices.json          
 
       - name: Commit updated price
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add btc-price.json
+          git add prices.json
           git commit -m "Update BTC price"
           git push
