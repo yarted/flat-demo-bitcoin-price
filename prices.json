@@ -1,1 +1,1 @@
-{"bitcoin":{"usd":115838},"bitcoin-cash":{"usd":601.91},"ethereum":{"usd":4485.47},"litecoin":{"usd":114.09}}
+{"status":{"error_code":429,"error_message":"You've exceeded the Rate Limit. Please visit https://www.coingecko.com/en/api/pricing to subscribe to our API plans for higher rate limits."}}
